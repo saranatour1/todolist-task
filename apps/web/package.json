@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
+    "@fontsource-variable/inter": "^5.0.18",
     "@next-auth/prisma-adapter": "0.4.4-canary.81",
     "@prisma/client": "5.13.0",
     "@vinejs/vine": "^2.0.0",

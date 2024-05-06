@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Provider from "@/context/Provider";
-
-const inter = Inter({ subsets: ["latin"] });
+import '@fontsource-variable/inter';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-inter w-full h-full min-h-screen max-w-full">
         <Provider>
           {children}
         </Provider>
