@@ -64,7 +64,7 @@ function SignUp() {
           </form>
         </section>
         <section className="flex-[0.5] w-full min-h- flex-grow p-[0.62rem] bg-blue-0 flex flex-col justify-center items-center">
-          <div className="pt-[13.14rem] flex flex-col items-center justify-center gap-y-[5rem]">
+          <div className="pt-[12.52rem] flex flex-col items-center justify-center gap-y-[5rem]">
             <Image src={signUpUndraw} alt="waving vector"/>
             <hgroup className="text-center text-white-0 flex flex-col justify-center items-center w-full max-w-[26.15919rem]">
             <h1 className="text-[2.5rem] font-semibold leading-[3.75rem] self-stretch">
