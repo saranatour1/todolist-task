@@ -33,7 +33,7 @@ function Login() {
       </section>
       <section className="flex-[0.5] w-full h-auto py-[0.625rem] px-10 flex flex-col items-center justify-center bg-white flex-grow">
       <form className="py-[6.82rem] flex flex-col w-full items-center justify-center gap-y-10" onSubmit={registerUser}>
-            <h1 className=" text-black-1 text-[2.25rem] font-semibold leading-9">تسجيل الدخول</h1>
+            <h1 className=" text-black-1 text-[2.25rem] font-semibold leading-9 ">تسجيل الدخول</h1>
             <div className="flex flex-col w-full items-center justify-center gap-y-9 h-full">
             <Input name="email" placeHolder="example@gmail.com" label="البريد الالكتروني" type="email" value={data.email} onChange={(e)=>setData({...data, email:e.currentTarget.value})}/>
             <div className="w-full relative flex flex-col items-start justify-start gap-y-[1.5rem]">

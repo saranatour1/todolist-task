@@ -29,7 +29,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily:{
-        "inter":['Inter Variable',"sans-serif"]
+        inter: ['var(--font-inter)'],
       },
       boxShadow:{
         "inner-shadow":"0px 2px 0px 0px rgba(231, 235, 238, 0.20) inset"
