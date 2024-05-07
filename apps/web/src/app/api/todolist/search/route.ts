@@ -11,15 +11,20 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
     return NextResponse.json("Unauthorized", { status: 401 });
   }
 
-  const userId = session.user?.id;
+  const userId = await prisma.user.findUnique({
+    where:{
+      email: session.user?.email as string,
+    }
+  });
+
   const searchTerm = request.nextUrl.searchParams.get("q") || "";
 
   const todos = await prisma.todo.findMany({
     where: {
-      userId,
+      userId:userId?.id,
       OR: [
-        { name: { contains: searchTerm, mode: "insensitive" } },
-        { description: { contains: searchTerm, mode: "insensitive" } },
+        { name: { contains: searchTerm, mode:"default" } },
+        { description: { contains: searchTerm, mode: "default" } },
       ],
     },
   });

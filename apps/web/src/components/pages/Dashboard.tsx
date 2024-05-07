@@ -8,8 +8,12 @@ import { Todo, TodoResponse } from '@/constants/types';
 
 function Dashboard() {
   const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [filtered, setFiltered] =  useState<Todo[]>([]);
+  const [searchKeyworkd,setSearchKeyworkd] =useState("");
+  const [found,setFound] = useState(false)
   const [options, setOptions] = useState({page:1, limit:10})
   const [total, setTotal] =useState(0)
+  let timeoutID = null;
 
   useEffect(()=>{
     const getTodoLists = async() =>{
@@ -26,7 +30,7 @@ function Dashboard() {
           const result  = await response.json()
           setTodoList(result["todos"])
           setTotal(result["total"])
-          console.log(result['todos'])
+          // console.log(result['todos'])
         }
       }catch(e){
         console.log(e)
@@ -121,12 +125,43 @@ function Dashboard() {
     }
     setTodoList(sortedTodos);
   };
+
+  const searchBar=(q:string)=>{
+    // "/api/todolist/search?q=${dd}"
+    setSearchKeyworkd(q)
   
+    try{
+      if (timeoutID) {
+        clearTimeout(timeoutID)
+        timeoutID = null
+      }
+      
+      timeoutID = setTimeout(async() => {
+        // make fetch request here
+        try{
+          const request = await fetch(`/api/todolist/search?q=${q}`)
+          const response = await request.json()
+          if(request.status === 404){
+            setFiltered([])
+          }else{
+            setFiltered(response["todos"])
+          }
+
+        }catch(e){
+          console.log(e)
+        }
+        // ensure to clear timeoutID here too
+        timeoutID = null;
+      }, 1500)
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   return (
     <main className="w-full h-full max-w-full min-h-screen bg-white-1">
       <NavBar />
-      {todoList?.length ? <Display sortTodoList={sortTodoList} todolist={todoList} addNewTodoItem={addNewTodoItem} editItem={editItem} deleteItem={deleteItem}/>:<NotFound addNewTodoItem={addNewTodoItem}/>}
+      {todoList?.length ?<Display searchBar={searchBar} sortTodoList={sortTodoList} todolist={searchKeyworkd.length ? filtered :todoList} addNewTodoItem={addNewTodoItem} editItem={editItem} deleteItem={deleteItem}/>:<NotFound addNewTodoItem={addNewTodoItem}/>}
     </main>
   );
 }
