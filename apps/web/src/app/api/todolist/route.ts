@@ -127,9 +127,13 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
     skip: offset,
   });
 
+  const total = await prisma.todo.count({
+    where: { userId },
+  }) 
+
   if (todos.length === 0) {
     return NextResponse.json("Not found", { status: 404 });
   }
 
-  return NextResponse.json({ todos }, { status: 200 });
+  return NextResponse.json({ todos , total }, { status: 200 });
 };
