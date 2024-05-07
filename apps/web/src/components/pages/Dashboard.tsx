@@ -3,7 +3,7 @@ import NavBar from '@/components/Navigation/NavBar';
 import { useEffect, useState } from 'react';
 import NotFound from '@/components/TodoList/NotFound';
 import Display from '@/components/TodoList/Display';
-import { Todo } from '@/constants/types';
+import { Todo, TodoResponse } from '@/constants/types';
 
 
 function Dashboard() {
@@ -26,6 +26,7 @@ function Dashboard() {
           const result  = await response.json()
           setTodoList(result["todos"])
           setTotal(result["total"])
+          console.log(result['todos'])
         }
       }catch(e){
         console.log(e)
@@ -52,9 +53,9 @@ function Dashboard() {
   
   
   return (
-    <main className="w-full h-full max-w-full min-h-screen">
+    <main className="w-full h-full max-w-full min-h-screen bg-white-1">
       <NavBar />
-      {todoList?.length ? <Display />:<NotFound addNewTodoItem={addNewTodoItem}/>}
+      {todoList?.length ? <Display todolist={todoList} addNewTodoItem={addNewTodoItem} />:<NotFound addNewTodoItem={addNewTodoItem}/>}
     </main>
   );
 }
