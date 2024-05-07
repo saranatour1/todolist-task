@@ -1,7 +1,7 @@
 export interface Todo{
   name:string;
   description:string;
-  staus:boolean;
+  status:boolean;
 }
 
 

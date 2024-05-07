@@ -9,6 +9,7 @@ import { Todo } from '@/constants/types';
 function Dashboard() {
   const [todoList, setTodoList] = useState<Todo[]>();
   const [options, setOptions] = useState({page:1, limit:10})
+  const [total, setTotal] =useState(0)
 
   useEffect(()=>{
     const getTodoLists = async() =>{
@@ -22,6 +23,9 @@ function Dashboard() {
           setTodoList([]);
         }else{
           // Todo: set the todo lists
+          const result  = await response.json()
+          setTodoList(result["todos"])
+          setTotal(result["total"])
         }
       }catch(e){
         console.log(e)
@@ -39,11 +43,13 @@ function Dashboard() {
         },
         body:JSON.stringify(item),
       })
-      console.log(response.json());
+
+      console.log(await response.json());
     }catch(e){
       console.log(e)
     }
   }
+  
   
   return (
     <main className="w-full h-full max-w-full min-h-screen">

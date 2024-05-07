@@ -30,14 +30,19 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     }
   }
 
-  const userId = session.user?.id;
+  
+  const userId = await prisma.user.findUnique({
+    where:{
+      email: session.user?.email as string,
+    }
+  });
 
   const todo = await prisma.todo.create({
     data: {
       name,
       description,
       status,
-      userId,
+      userId:userId?.id,
     },
   });
 
