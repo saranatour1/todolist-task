@@ -43,3 +43,44 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
 
   return NextResponse.json({ todo }, { status: 200 });
 };
+
+
+// Edit a todo item
+export const PUT = async (request: NextRequest, response: NextResponse) => {
+  const session = await getServerSession();
+
+  if (!session) {
+    return NextResponse.json("unauthorized", { status: 401 });
+  }
+
+  const { id, name, description, status } = await request.json();
+
+  const schema = vine.object({
+    name: vine.string().maxLength(32).optional(),
+    description: vine.string().maxLength(1000).optional(),
+    status: vine.boolean().optional(),
+  });
+
+  const data = { id, name, description, status };
+  try {
+    const validator = vine.compile(schema);
+    await validator.validate(data);
+  } catch (error) {
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      return NextResponse.json(error.messages, { status: 400 });
+    }
+  }
+
+  const userId = session.user?.id;
+
+  const todo = await prisma.todo.update({
+    where: {id:id, userId: userId},
+    data: { name, description, status },
+  });
+
+  if (!todo) {
+    return NextResponse.json("Todo not found", { status: 404 });
+  }
+
+  return NextResponse.json({ todo }, { status: 200 });
+};
