@@ -107,3 +107,29 @@ export const DELETE = async (request: NextRequest, response: NextResponse) => {
 
   return NextResponse.json({ message: "Todo item deleted successfully" }, { status: 200 });
 };
+
+// get todos by filter and page 
+export const GET = async (request: NextRequest, response: NextResponse) => {
+  const session = await getServerSession();
+
+  if (!session) {
+    return NextResponse.json("unauthorized", { status: 401 });
+  }
+
+  const userId = session.user?.id;
+  const page = Number(request.nextUrl.searchParams.get("page")) || 1;
+  const limit = Number(request.nextUrl.searchParams.get("limit")) || 10; 
+  const offset = (page - 1) * limit; 
+
+  const todos = await prisma.todo.findMany({
+    where: { userId },
+    take: limit,
+    skip: offset,
+  });
+
+  if (todos.length === 0) {
+    return NextResponse.json("Not found", { status: 404 });
+  }
+
+  return NextResponse.json({ todos }, { status: 200 });
+};
