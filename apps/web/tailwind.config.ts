@@ -32,7 +32,9 @@ const config: Config = {
         inter: ['var(--font-inter)'],
       },
       boxShadow:{
-        "inner-shadow":"0px 2px 0px 0px rgba(231, 235, 238, 0.20) inset"
+        "inner-shadow":"0px 2px 0px 0px rgba(231, 235, 238, 0.20) inset",
+        "nav-shadow":"0px -1px 1px 0px rgba(0, 0, 0, 0.10) inset",
+        "modal":" 0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)"
       }
     },
   },
