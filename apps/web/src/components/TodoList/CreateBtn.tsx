@@ -3,10 +3,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, TextInput, InputLabel, Textarea } from "@mantine/core";
 import Image from "next/image";
 import PlusSign from "../../../public/plus-sign.svg";
-import { AddItemsInterface } from "@/constants/types";
-import { FormEvent } from "react";
+import { AddItemsInterface, Todo } from "@/constants/types";
+import { FormEvent, useState } from "react";
 
-function CreateBtn({ addNewTodoItem }: AddItemsInterface) {
+interface Props extends AddItemsInterface{
+  initialValues?:Todo;
+}
+
+function CreateBtn({ addNewTodoItem ,initialValues }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const addItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,10 +48,10 @@ function CreateBtn({ addNewTodoItem }: AddItemsInterface) {
           </label>
 
           <div className="w-full flex items-center justify-center gap-x-[1.44rem] ">
-            <button className=" py-[0.62rem] px-4 rounded-[0.5rem] bg-blue-0 text-white-0 font-bold">
-              اضافة المهمة
+            <button type="submit" className={`py-[0.62rem] px-4 rounded-[0.5rem] ${initialValues ? "purple-0" :"bg-blue-0"} text-white-0 font-bold`}>
+          اضافة المهمة"
             </button>
-            <button type="reset" className="font-bold py-2">
+            <button type="reset" className="font-bold py-2" onClick={close}>
               الغاء العملية
             </button>
           </div>
@@ -61,6 +65,8 @@ function CreateBtn({ addNewTodoItem }: AddItemsInterface) {
         <Image src={PlusSign} alt="plus sign" className=" self-center w-[1.25rem] h-[1.25rem]" />
         <span className="text-[1rem] leading-5 tracking-[0.02rem] text-white-0 font-bold">اضافة مهمة</span>
       </button>
+
+      {/* {children} */}
     </>
   );
 }

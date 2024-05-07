@@ -60,6 +60,12 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
 
   const { id, name, description, status } = await request.json();
 
+  const userId = await prisma.user.findUnique({
+    where:{
+      email: session.user?.email as string,
+    }
+  });
+
   const schema = vine.object({
     name: vine.string().maxLength(32).optional(),
     description: vine.string().maxLength(1000).optional(),
@@ -76,10 +82,10 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
     }
   }
 
-  const userId = session.user?.id;
+  // const userId = session.user?.id;
 
   const todo = await prisma.todo.update({
-    where: {id:id, userId: userId},
+    where: {id:id, userId: userId?.id},
     data: { name, description, status },
   });
 
@@ -98,12 +104,16 @@ export const DELETE = async (request: NextRequest, response: NextResponse) => {
     return NextResponse.json("unauthorized", { status: 401 });
   }
 
-  const { id } = await request.json();
+  const  id  = request.nextUrl.searchParams.get("id");
 
-  const userId = session.user?.id;
+  const userId = await prisma.user.findUnique({
+    where:{
+      email: session.user?.email as string,
+    }
+  });
 
   const todo = await prisma.todo.delete({
-    where: {id:id, userId: userId},
+    where: {id:Number(id) , userId: userId?.id},
   });
 
   if (!todo) {

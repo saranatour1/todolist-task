@@ -5,26 +5,31 @@ import SortBtn from "./SortBtn";
 import { Menu, MenuItem, Table } from "@mantine/core";
 import Image from "next/image";
 import pen from "../../../public/pen.svg";
-import deleteIcon from "../../../public/delete.svg";
+
+import EditBtn from "./EditBtn";
+import DeleteBtn from "./DeleteBtn";
 
 interface Props {
   todolist: Todo[];
   addNewTodoItem: (t: Todo) => void;
+  editItem:(t:Todo) => void;
+  deleteItem:(t:string) => void;
+  sortTodoList:(i:number) => void;
 }
-function Display({ todolist, addNewTodoItem }: Props) {
+function Display({ sortTodoList,todolist, addNewTodoItem , editItem , deleteItem }: Props) {
+
+  const toggle =(e:Event, item:Todo)=>{
+    const updatedItem = {...item, status: !item.status}
+    editItem(updatedItem)
+  }
   const rows = todolist.map((element) => (
     <Table.Tr key={element.name}>
       <Table.Td>
-        <button>
-          <Image src={deleteIcon} alt="delete icon"/>
-        </button>
-
-        <button>
-          <Image src={pen} alt="pen " />
-        </button>
+          <DeleteBtn id={element.id as number} deleteItem={deleteItem}/>
+          <EditBtn initialValue={element} editTodoItem={editItem}/>
       </Table.Td>
       <Table.Td>
-      <select className={`${element.status ? "green-1":"gray-0"} border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-[5.25rem] py-[ 0.0625rem] px-[0.25rem]`}>
+      <select value={element.status ? 1:0} onChange={(e)=> toggle(e , element)}  className={`${element.status ? "green-1":"gray-0"} border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-[5.25rem] py-[ 0.0625rem] px-[0.25rem]`}>
           <option value={1}>مكتملة</option>
           <option value={0}>غير مكتملة</option>
         </select>
@@ -41,7 +46,7 @@ function Display({ todolist, addNewTodoItem }: Props) {
         <CreateBtn addNewTodoItem={addNewTodoItem} />
         <div className="flex justify-center items-center gap-x-4 ">
           <SearchBar />
-          <SortBtn />
+          <SortBtn sortTodoList={sortTodoList} />
         </div>
       </div>
 
@@ -54,6 +59,7 @@ function Display({ todolist, addNewTodoItem }: Props) {
               <Table.Th>الوصف</Table.Th>
               <Table.Th>العنوان</Table.Th>
               <Table.Th>#</Table.Th>
+
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>

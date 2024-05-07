@@ -2,7 +2,10 @@ import { Button, Menu, Popover, rem } from "@mantine/core";
 import Image from "next/image";
 import sort from "../../../public/sort.svg"
 
-function SortBtn(props) {
+interface Props{
+  sortTodoList:(i:number)=> void;
+}
+function SortBtn({sortTodoList}:Props) {
 
   const options =[
     {name:"عرض الجميع", opt:1},
@@ -11,7 +14,7 @@ function SortBtn(props) {
   ]
 
   const setSorter= (i:number)=>{
-    console.log(i)
+    sortTodoList(i)
   }
   return (
   <Menu shadow="md" width={200} classNames={{label:" text-red"}}>
