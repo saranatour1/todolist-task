@@ -84,3 +84,26 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
 
   return NextResponse.json({ todo }, { status: 200 });
 };
+
+// Delete a todo item
+export const DELETE = async (request: NextRequest, response: NextResponse) => {
+  const session = await getServerSession();
+
+  if (!session) {
+    return NextResponse.json("unauthorized", { status: 401 });
+  }
+
+  const { id } = await request.json();
+
+  const userId = session.user?.id;
+
+  const todo = await prisma.todo.delete({
+    where: {id:id, userId: userId},
+  });
+
+  if (!todo) {
+    return NextResponse.json("Todo not found", { status: 404 });
+  }
+
+  return NextResponse.json({ message: "Todo item deleted successfully" }, { status: 200 });
+};
