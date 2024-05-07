@@ -14,6 +14,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name:"credentials",
       credentials:{
+        id:{},
         email:{},
         username:{},
         password:{},
@@ -39,17 +40,22 @@ export const authOptions: AuthOptions = {
   ],
   session:{
     strategy:"jwt",
-    maxAge: 3000,
+    // Todo : change this back to 5min
+    maxAge: 30*24*60*60 ,
   },
 
   callbacks:{
-    async jwt({ user, token }) {
+    jwt: async ({ user, token }) => {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        token.uid = user.id;
       }
-  
-      return token; 
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+      }
+      return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
