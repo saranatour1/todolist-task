@@ -1,9 +1,9 @@
-import { Todo } from '@/constants/types';
-import { useDisclosure } from '@mantine/hooks';
-import { Modal } from '@mantine/core';
-import { FormEvent, useState } from 'react';
-import pen from "../../../public/pen.svg"
-import Image from 'next/image';
+import { Todo } from "@/constants/types";
+import { useDisclosure } from "@mantine/hooks";
+import { Modal } from "@mantine/core";
+import { FormEvent, useState } from "react";
+import pen from "../../../public/pen.svg";
+import Image from "next/image";
 
 interface Props {
   initialValue: Todo;
@@ -21,16 +21,24 @@ function EditBtn({ initialValue, editTodoItem }: Props) {
       name: name,
       description: description,
       status: initialValue.status,
-      id: initialValue.id
+      id: initialValue.id,
     };
     editTodoItem(data);
     close();
-  }
+  };
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="اضافة مهمة جديدة" className="p-10 gap-y-8">
-        <form onSubmit={editItem} className="flex flex-col justify-end items-end w-full gap-y-4">
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="اضافة مهمة جديدة"
+        className="p-10 gap-y-8"
+      >
+        <form
+          onSubmit={editItem}
+          className="flex flex-col justify-end items-end w-full gap-y-4"
+        >
           <label className="w-full flex flex-col items-end justify-start gap-y-[0.88rem]">
             <span className="text-right w-full">عنوان المهمة</span>
             <input
@@ -54,7 +62,10 @@ function EditBtn({ initialValue, editTodoItem }: Props) {
           </label>
 
           <div className="w-full flex items-center justify-center gap-x-[1.44rem]">
-            <button type="submit" className='px-8 py-2 bg-blue-0 flex rounded-[0.375rem] justify-center items-center gap-x-0.5 w-full max-w-[13.75rem] text-white-0 font-bold'>
+            <button
+              type="submit"
+              className="px-8 py-2 bg-blue-0 flex rounded-[0.375rem] justify-center items-center gap-x-0.5 w-full max-w-[13.75rem] text-white-0 font-bold"
+            >
               تعديل المهمة
             </button>
             <button type="button" className="font-bold py-2" onClick={close}>

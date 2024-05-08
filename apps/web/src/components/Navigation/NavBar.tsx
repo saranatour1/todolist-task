@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import { Avatar, Button, Popover, TextInput } from "@mantine/core";
 import Image from "next/image";
-import ArrowDown from "../../../public/arrowdown.svg"
-import Logo from "../../../public/logo.svg"
+import ArrowDown from "../../../public/arrowdown.svg";
+import Logo from "../../../public/logo.svg";
 import { signOut, useSession } from "next-auth/react";
 function NavBar() {
   const { data: session, status } = useSession();
@@ -13,12 +13,15 @@ function NavBar() {
           <Popover trapFocus position="bottom" withArrow shadow="md">
             <Popover.Target>
               <button className="bg-transparent">
-                <Image src={ArrowDown} alt="arrow down svg"/>
+                <Image src={ArrowDown} alt="arrow down svg" />
               </button>
             </Popover.Target>
             <Popover.Dropdown className="px-4 py-2 shadow-modal rounded-[0.375rem]">
-              <button className="text-red-0 text-[0.875rem] font-medium" onClick={()=> signOut()}>
-              تسجيل الخروج
+              <button
+                className="text-red-0 text-[0.875rem] font-medium"
+                onClick={() => signOut()}
+              >
+                تسجيل الخروج
               </button>
             </Popover.Dropdown>
           </Popover>

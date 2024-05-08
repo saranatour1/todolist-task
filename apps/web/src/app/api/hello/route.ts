@@ -5,6 +5,6 @@ export async function GET(request: NextRequest) {
     { message: "tell me why?" },
     {
       status: 200,
-    }
+    },
   );
 }

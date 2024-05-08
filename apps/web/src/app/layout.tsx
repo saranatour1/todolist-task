@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Provider from "@/context/Provider";
-import { Inter } from 'next/font/google'
-import '@mantine/core/styles.css';
- 
+import { Inter } from "next/font/google";
+import "@mantine/core/styles.css";
+
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`w-full h-full min-h-screen max-w-full ${inter.variable}`}>
-        <Provider>
-          {children}
-        </Provider>
-        </body>
+      <body
+        className={`w-full h-full min-h-screen max-w-full ${inter.variable}`}
+      >
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }

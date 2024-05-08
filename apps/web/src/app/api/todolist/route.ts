@@ -30,11 +30,10 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     }
   }
 
-  
   const userId = await prisma.user.findUnique({
-    where:{
+    where: {
       email: session.user?.email as string,
-    }
+    },
   });
 
   const todo = await prisma.todo.create({
@@ -42,13 +41,12 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
       name,
       description,
       status,
-      userId:userId?.id,
+      userId: userId?.id,
     },
   });
 
   return NextResponse.json({ todo }, { status: 200 });
 };
-
 
 // Edit a todo item
 export const PUT = async (request: NextRequest, response: NextResponse) => {
@@ -61,9 +59,9 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
   const { id, name, description, status } = await request.json();
 
   const userId = await prisma.user.findUnique({
-    where:{
+    where: {
       email: session.user?.email as string,
-    }
+    },
   });
 
   const schema = vine.object({
@@ -85,7 +83,7 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
   // const userId = session.user?.id;
 
   const todo = await prisma.todo.update({
-    where: {id:id, userId: userId?.id},
+    where: { id: id, userId: userId?.id },
     data: { name, description, status },
   });
 
@@ -104,26 +102,29 @@ export const DELETE = async (request: NextRequest, response: NextResponse) => {
     return NextResponse.json("unauthorized", { status: 401 });
   }
 
-  const  id  = request.nextUrl.searchParams.get("id");
+  const id = request.nextUrl.searchParams.get("id");
 
   const userId = await prisma.user.findUnique({
-    where:{
+    where: {
       email: session.user?.email as string,
-    }
+    },
   });
 
   const todo = await prisma.todo.delete({
-    where: {id:Number(id) , userId: userId?.id},
+    where: { id: Number(id), userId: userId?.id },
   });
 
   if (!todo) {
     return NextResponse.json("Todo not found", { status: 404 });
   }
 
-  return NextResponse.json({ message: "Todo item deleted successfully" }, { status: 200 });
+  return NextResponse.json(
+    { message: "Todo item deleted successfully" },
+    { status: 200 },
+  );
 };
 
-// get todos by filter and page 
+// get todos by filter and page
 export const GET = async (request: NextRequest, response: NextResponse) => {
   const session = await getServerSession();
 
@@ -132,27 +133,27 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
   }
 
   const userId = await prisma.user.findUnique({
-    where:{
+    where: {
       email: session.user?.email as string,
-    }
+    },
   });
   const page = Number(request.nextUrl.searchParams.get("page")) || 1;
-  const limit = Number(request.nextUrl.searchParams.get("limit")) || 10; 
-  const offset = (page-1) * limit; 
+  const limit = Number(request.nextUrl.searchParams.get("limit")) || 10;
+  const offset = (page - 1) * limit;
 
   const todos = await prisma.todo.findMany({
-    where: { userId:userId?.id },
+    where: { userId: userId?.id },
     take: limit,
     skip: offset,
   });
 
   const total = await prisma.todo.count({
-    where: { userId:userId?.id },
-  }) 
+    where: { userId: userId?.id },
+  });
 
   if (todos.length === 0) {
     return NextResponse.json("Not found", { status: 404 });
   }
 
-  return NextResponse.json({ todos , total }, { status: 200 });
+  return NextResponse.json({ todos, total }, { status: 200 });
 };
