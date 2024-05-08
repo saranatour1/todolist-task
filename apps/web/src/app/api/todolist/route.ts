@@ -131,19 +131,23 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
     return NextResponse.json("unauthorized", { status: 401 });
   }
 
-  const userId = session.user?.id;
+  const userId = await prisma.user.findUnique({
+    where:{
+      email: session.user?.email as string,
+    }
+  });
   const page = Number(request.nextUrl.searchParams.get("page")) || 1;
   const limit = Number(request.nextUrl.searchParams.get("limit")) || 10; 
-  const offset = (page - 1) * limit; 
+  const offset = (page-1) * limit; 
 
   const todos = await prisma.todo.findMany({
-    where: { userId },
+    where: { userId:userId?.id },
     take: limit,
     skip: offset,
   });
 
   const total = await prisma.todo.count({
-    where: { userId },
+    where: { userId:userId?.id },
   }) 
 
   if (todos.length === 0) {
