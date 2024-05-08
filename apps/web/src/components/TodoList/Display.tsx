@@ -3,9 +3,11 @@ import CreateBtn from "./CreateBtn";
 import SearchBar from "./SearchBar";
 import SortBtn from "./SortBtn";
 import { Menu, MenuItem, Table } from "@mantine/core";
+import Image from "next/image";
+import pen from "../../../public/pen.svg";
+
 import EditBtn from "./EditBtn";
 import DeleteBtn from "./DeleteBtn";
-import Pagination from "./Pagination";
 
 interface Props {
   todolist: Todo[];
