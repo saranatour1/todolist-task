@@ -12,18 +12,18 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
   }
 
   const userId = await prisma.user.findUnique({
-    where:{
+    where: {
       email: session.user?.email as string,
-    }
+    },
   });
 
   const searchTerm = request.nextUrl.searchParams.get("q") || "";
 
   const todos = await prisma.todo.findMany({
     where: {
-      userId:userId?.id,
+      userId: userId?.id,
       OR: [
-        { name: { contains: searchTerm, mode:"default" } },
+        { name: { contains: searchTerm, mode: "default" } },
         { description: { contains: searchTerm, mode: "default" } },
       ],
     },

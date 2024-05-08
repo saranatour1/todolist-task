@@ -6,11 +6,11 @@ import PlusSign from "../../../public/plus-sign.svg";
 import { AddItemsInterface, Todo } from "@/constants/types";
 import { FormEvent, useState } from "react";
 
-interface Props extends AddItemsInterface{
-  initialValues?:Todo;
+interface Props extends AddItemsInterface {
+  initialValues?: Todo;
 }
 
-function CreateBtn({ addNewTodoItem ,initialValues }: Props) {
+function CreateBtn({ addNewTodoItem, initialValues }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const addItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,9 +26,17 @@ function CreateBtn({ addNewTodoItem ,initialValues }: Props) {
   return (
     <>
       {/* // todo: reverse these buttons */}
-      <Modal opened={opened} onClose={close} title="اضافة مهمة جديدة" className="p-10 gap-y-8">
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="اضافة مهمة جديدة"
+        className="p-10 gap-y-8"
+      >
         {/* Modal content */}
-        <form onSubmit={addItem} className="flex flex-col justify-end items-end w-full gap-y-4">
+        <form
+          onSubmit={addItem}
+          className="flex flex-col justify-end items-end w-full gap-y-4"
+        >
           <label className="w-full flex flex-col items-end justify-start gap-y-[0.88rem]">
             <span className="text-right w-full">عنوان المهمة</span>
             <input
@@ -48,8 +56,11 @@ function CreateBtn({ addNewTodoItem ,initialValues }: Props) {
           </label>
 
           <div className="w-full flex items-center justify-center gap-x-[1.44rem] ">
-            <button type="submit" className={`py-[0.62rem] px-4 rounded-[0.5rem] ${initialValues ? "purple-0" :"bg-blue-0"} text-white-0 font-bold`}>
-          اضافة المهمة"
+            <button
+              type="submit"
+              className={`py-[0.62rem] px-4 rounded-[0.5rem] ${initialValues ? "purple-0" : "bg-blue-0"} text-white-0 font-bold`}
+            >
+              اضافة المهمة"
             </button>
             <button type="reset" className="font-bold py-2" onClick={close}>
               الغاء العملية
@@ -62,8 +73,14 @@ function CreateBtn({ addNewTodoItem ,initialValues }: Props) {
         onClick={open}
         className="px-8 py-2 bg-blue-0 flex rounded-[0.375rem] justify-center items-center gap-x-0.5 w-full max-w-[13.75rem]"
       >
-        <Image src={PlusSign} alt="plus sign" className=" self-center w-[1.25rem] h-[1.25rem]" />
-        <span className="text-[1rem] leading-5 tracking-[0.02rem] text-white-0 font-bold">اضافة مهمة</span>
+        <Image
+          src={PlusSign}
+          alt="plus sign"
+          className=" self-center w-[1.25rem] h-[1.25rem]"
+        />
+        <span className="text-[1rem] leading-5 tracking-[0.02rem] text-white-0 font-bold">
+          اضافة مهمة
+        </span>
       </button>
 
       {/* {children} */}

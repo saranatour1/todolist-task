@@ -3,55 +3,58 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { compare } from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import CredentialsProvider from 'next-auth/providers/credentials';
+import CredentialsProvider from "next-auth/providers/credentials";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 // more providers at https://next-auth.js.org/providers
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
-  providers:[
+  providers: [
     CredentialsProvider({
-      name:"credentials",
-      credentials:{
-        id:{},
-        email:{},
-        username:{},
-        password:{},
+      name: "credentials",
+      credentials: {
+        id: {},
+        email: {},
+        username: {},
+        password: {},
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
-      
+
         const user = await prisma?.user.findUnique({
           where: {
             email: credentials.email,
           },
         });
-      
+
         if (!user) return null;
-      
-        const passwordMatches = await compare(credentials.password, user.password);
+
+        const passwordMatches = await compare(
+          credentials.password,
+          user.password,
+        );
         if (!passwordMatches) return null;
-      
+
         const userStringId = user.id.toString();
         return { ...user, id: userStringId };
-      },      
-    })
+      },
+    }),
   ],
-  session:{
-    strategy:"jwt",
+  session: {
+    strategy: "jwt",
     // Todo : change this back to 5min
-    maxAge: 30*24*60*60 ,
+    maxAge: 30 * 24 * 60 * 60,
   },
 
-  callbacks:{
+  callbacks: {
     jwt: async ({ user, token }) => {
       if (user) {
         token.uid = user.id;
       }
       return token;
     },
-    session: async ({ session, token ,user }) => {
+    session: async ({ session, token, user }) => {
       if (session?.user) {
         session.user.id = token.sub;
         session.user = user;
@@ -60,6 +63,5 @@ export const authOptions: AuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug:process.env.NODE_ENV ==="development",
-  
+  debug: process.env.NODE_ENV === "development",
 };
