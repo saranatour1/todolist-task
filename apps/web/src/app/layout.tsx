@@ -3,6 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Provider from "@/context/Provider";
 import { Inter } from 'next/font/google'
+import '@mantine/core/styles.css';
  
 const inter = Inter({
   subsets: ['latin'],
