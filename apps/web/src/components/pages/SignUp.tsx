@@ -35,7 +35,6 @@ function SignUp() {
       }
   
       const userInfo = await response.json(); 
-      console.log(userInfo);
         router.push('/login');
     } catch (e) {
       console.log("failed to sign up", e);
