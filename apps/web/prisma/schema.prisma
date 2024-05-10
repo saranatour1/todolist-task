@@ -46,6 +46,7 @@ model User {
   password         String
   email            String    @unique
   passwordRecovery String?
+  createdAt        DateTime @default(now())
   image            String?
   confirmed        Boolean   @default(false)
   todos            Todo[]
