@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import vine, { errors } from "@vinejs/vine";
-const prisma = new PrismaClient();
+
 // create a todo list
 export const POST = async (request: NextRequest, response: NextResponse) => {
   const session = await getServerSession();
