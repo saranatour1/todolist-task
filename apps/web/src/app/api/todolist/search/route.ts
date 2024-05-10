@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 // Search todos by name or description
 export const GET = async (request: NextRequest, response: NextResponse) => {
   const session = await getServerSession();

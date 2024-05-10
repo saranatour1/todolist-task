@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
 import { hash } from "bcrypt";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "@/prisma/db";
+
 
 export const POST = async (request: Request) => {
   try {
