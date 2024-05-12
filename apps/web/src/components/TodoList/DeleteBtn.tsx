@@ -12,7 +12,7 @@ function DeleteBtn({ deleteItem, id }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} className="p-10 gap-y-8">
+      <Modal opened={opened} onClose={close} >
         {/* Modal content */}
         <div className="p-[1.5rem] flex flex-col justify-center items-center gap-y-[2rem]">
           <Image src={deletIcon} alt="delete icon" />
