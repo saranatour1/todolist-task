@@ -1,0 +1,20 @@
+{
+  "name": "database",
+  "version": "0.0.0",
+  "dependencies": {
+    "@prisma/client": "^5.10.2"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.10.2",
+    "@types/node": "^17.0.12",
+    "prisma": "^5.10.2"
+  },
+  "scripts": {
+    "db:generate": "prisma generate dev",
+    "db:push": "prisma db push --skip-generate",
+    "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts"
+}
