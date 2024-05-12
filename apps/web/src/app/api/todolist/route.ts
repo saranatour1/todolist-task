@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/prisma/db";
+import prisma from "database/db";
 import { getServerSession } from "next-auth";
 import vine, { errors } from "@vinejs/vine";
 

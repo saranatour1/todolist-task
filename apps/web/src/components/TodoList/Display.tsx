@@ -8,11 +8,12 @@ import pen from "../../../public/pen.svg";
 
 import EditBtn from "./EditBtn";
 import DeleteBtn from "./DeleteBtn";
+import { ChangeEvent } from "react";
 
 interface Props {
   todolist: Todo[];
-  addNewTodoItem: (t: Todo) => void;
-  editItem: (t: Todo) => void;
+  addNewTodoItem: (t: Partial<Todo> |Todo) => void;
+  editItem: (t: Partial<Todo> | Todo) => void;
   deleteItem: (t: string) => void;
   sortTodoList: (i: number) => void;
   searchBar: (i: string) => void;
@@ -25,7 +26,7 @@ function Display({
   deleteItem,
   searchBar,
 }: Props) {
-  const toggle = (e: Event, item: Todo) => {
+  const toggle = (e: ChangeEvent<HTMLSelectElement>, item: Todo) => {
     const updatedItem = { ...item, status: !item.status };
     editItem(updatedItem);
   };
@@ -34,7 +35,7 @@ function Display({
       todolist.map((element) => (
         <Table.Tr key={element.name}>
           <Table.Td>
-            <DeleteBtn id={element.id as number} deleteItem={deleteItem} />
+            <DeleteBtn id={element.id as string} deleteItem={deleteItem} />
             <EditBtn initialValue={element} editTodoItem={editItem} />
           </Table.Td>
           <Table.Td>

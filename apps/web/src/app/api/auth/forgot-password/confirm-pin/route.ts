@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
-import prisma from "@/prisma/db";
+import prisma from "database/db";
 
 // send the email to the backend, and check if the user exists, yes -> send email, no -> throw error and route them to signup 
 export const POST = async (request: NextRequest) => {
