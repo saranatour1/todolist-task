@@ -30,7 +30,6 @@ function CreateBtn({ addNewTodoItem, initialValues }: Props) {
         opened={opened}
         onClose={close}
         title="اضافة مهمة جديدة"
-        className="p-10 gap-y-8"
       >
         {/* Modal content */}
         <form

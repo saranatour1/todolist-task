@@ -12,7 +12,7 @@ function Dashboard() {
   const [found, setFound] = useState(false);
   const [options, setOptions] = useState({ page: 1, limit: 10 });
   const [total, setTotal] = useState(0);
-  let timeoutID:NodeJS.Timeout | string | number | undefined = undefined;
+  const [timeoutID, setTimoutID] = useState<NodeJS.Timeout | string | number | undefined>(undefined);
 
   useEffect(() => {
     const getTodoLists = async () => {
@@ -127,10 +127,11 @@ function Dashboard() {
     try {
       if (timeoutID) {
         clearTimeout(timeoutID);
-        timeoutID = undefined;
+        setTimoutID(undefined)
       }
 
-      timeoutID = setTimeout(async () => {
+      let tempTimeout = undefined;
+      tempTimeout = setTimeout(async () => {
         // make fetch request here
         try {
           const request = await fetch(`/api/todolist/search?q=${q}`);
@@ -144,8 +145,9 @@ function Dashboard() {
           console.log(e);
         }
         // ensure to clear timeoutID here too
-        timeoutID =  undefined;
+        setTimoutID(undefined)
       }, 1500);
+      setTimoutID(tempTimeout)
     } catch (e) {
       console.log(e);
     }
