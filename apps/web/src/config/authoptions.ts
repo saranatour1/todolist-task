@@ -2,12 +2,13 @@ import { AuthOptions, Session, User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "@/prisma/db";
+import prisma from "database/db";
+import { Adapter } from "next-auth/adapters";
 
 
 // more providers at https://next-auth.js.org/providers
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -54,7 +55,7 @@ export const authOptions: AuthOptions = {
     },
     session: async ({ session, token, user }) => {
       if (session?.user) {
-        session.user.id = token.sub;
+        // session.user.id = token.sub;
         session.user = user;
       }
       return session;

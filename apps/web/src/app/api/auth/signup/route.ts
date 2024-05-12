@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
 import { hash } from "bcrypt";
-import prisma from "@/prisma/db";
+import prisma from "database/db";
 
 
 export const POST = async (request: Request) => {

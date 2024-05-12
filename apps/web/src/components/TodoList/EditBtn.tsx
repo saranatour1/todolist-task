@@ -7,7 +7,7 @@ import Image from "next/image";
 
 interface Props {
   initialValue: Todo;
-  editTodoItem: (t: Todo) => void;
+  editTodoItem: (t: Partial<Todo> | Todo) => void;
 }
 
 function EditBtn({ initialValue, editTodoItem }: Props) {

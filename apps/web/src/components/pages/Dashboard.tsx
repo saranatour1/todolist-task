@@ -12,7 +12,7 @@ function Dashboard() {
   const [found, setFound] = useState(false);
   const [options, setOptions] = useState({ page: 1, limit: 10 });
   const [total, setTotal] = useState(0);
-  let timeoutID = null;
+  let timeoutID:NodeJS.Timeout | string | number | undefined = undefined;
 
   useEffect(() => {
     const getTodoLists = async () => {
@@ -38,7 +38,7 @@ function Dashboard() {
     getTodoLists();
   }, []);
 
-  const addNewTodoItem = async (item: Todo) => {
+  const addNewTodoItem = async (item: Partial<Todo>|Todo) => {
     try {
       const response = await fetch(`/api/todolist`, {
         method: "post",
@@ -57,7 +57,7 @@ function Dashboard() {
     }
   };
 
-  const editItem = async (item: Todo) => {
+  const editItem = async (item: Partial<Todo>|Todo) => {
     try {
       const response = await fetch(`/api/todolist`, {
         method: "PUT",
@@ -83,7 +83,7 @@ function Dashboard() {
     }
   };
 
-  const deleteItem = async (id: number) => {
+  const deleteItem = async (id: string) => {
     try {
       const response = await fetch(`/api/todolist?id=${id}`, {
         method: "DELETE",
@@ -115,7 +115,7 @@ function Dashboard() {
       sortedTodos = [...todoList].sort((a, b) => (a.status ? 1 : -1));
     } else if (option === 1) {
       // sort by id
-      sortedTodos = [...todoList].sort((a, b) => a.id - b.id);
+      sortedTodos = [...todoList].sort((a, b) => (a.id as number) - (b.id as number));
     }
     setTodoList(sortedTodos);
   };
@@ -127,7 +127,7 @@ function Dashboard() {
     try {
       if (timeoutID) {
         clearTimeout(timeoutID);
-        timeoutID = null;
+        timeoutID = undefined;
       }
 
       timeoutID = setTimeout(async () => {
@@ -144,7 +144,7 @@ function Dashboard() {
           console.log(e);
         }
         // ensure to clear timeoutID here too
-        timeoutID = null;
+        timeoutID =  undefined;
       }, 1500);
     } catch (e) {
       console.log(e);

@@ -15,7 +15,7 @@ function CreateBtn({ addNewTodoItem, initialValues }: Props) {
   const addItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = {
+    const data:Partial<Todo>|Todo = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
       status: false,

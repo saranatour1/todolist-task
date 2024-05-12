@@ -7,7 +7,7 @@ export interface Todo {
 }
 
 export interface AddItemsInterface {
-  addNewTodoItem: (item: Todo) => void;
+  addNewTodoItem: (item: Partial<Todo>| Todo) => void;
 }
 
 export interface TodoResponse extends Todo {

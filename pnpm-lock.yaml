@@ -84,6 +84,9 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.2.19
+      database:
+        specifier: workspace:*
+        version: link:../../packages/database
       eslint:
         specifier: ^8
         version: 8.57.0
@@ -111,6 +114,19 @@ importers:
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
+
+  packages/database:
+    dependencies:
+      '@prisma/client':
+        specifier: ^5.10.2
+        version: 5.13.0(prisma@5.13.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^17.0.12
+        version: 17.0.45
+      prisma:
+        specifier: ^5.10.2
+        version: 5.13.0
 
   packages/eslint-config:
     devDependencies:
@@ -585,6 +601,9 @@ packages:
 
   '@types/minimatch@5.1.2':
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
+
+  '@types/node@17.0.45':
+    resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
 
   '@types/node@20.11.24':
     resolution: {integrity: sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==}
@@ -3746,6 +3765,8 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/minimatch@5.1.2': {}
+
+  '@types/node@17.0.45': {}
 
   '@types/node@20.11.24':
     dependencies:
