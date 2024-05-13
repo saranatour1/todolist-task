@@ -15,6 +15,7 @@ const config: Config = {
         "gray-0": "#E9EDF5",
         "gray-1": "#212121",
         "gray-2": "#67728A",
+        "gray-3":"#718096",
         "black-0": "#171C26",
         "black-1": "#171923", // for headings
         "green-0": "#14804A",
