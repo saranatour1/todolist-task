@@ -45,7 +45,7 @@ function ResetPassword() {
               </span>
             </div>
             <Button>
-            متابعة
+            اعادة تعيين كلمة المرور
             </Button>
           </form>
 
